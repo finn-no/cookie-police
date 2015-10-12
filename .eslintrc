@@ -1,0 +1,6 @@
+{
+    "extends": "finn",
+    "env": {
+        "browser": true
+    }
+}
