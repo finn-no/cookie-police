@@ -8,11 +8,14 @@ If you have a large site, it might be hard to track down where every cookie come
 
 By providing a white-list of allowed cookies, Cookie Police can throw an error or call a callback whenever someone tries to set an unknown cookie. This way you can track it down locally, or create a way to report breaches from real users.
 
+Ironically, in the most privacy-concerned browser Safari, it is not possible to protect document.cookie (8.0.8 on OS X and iOS 9.0.2). WebKit nightly acts the same way as Safari, so it doesn't seem to get fixed anytime soon. But this project can still give value by warning developers (that rarely use Safari) when adding new third party scripts, or by reporting breaches to a server. So 100% browser coverage is not necessary.
+
 ## API
 
 ### cookiePolice(options)
 Available options:
 + `whiteList`: Array of allowed cookie-names. A breach will happen if anyone tries to set a cookie not in the list.
++ `ignoreList`: Array of cookie-names to ignore. It will silently ignore them without throwing an Error.
 
 
 ## Examples
