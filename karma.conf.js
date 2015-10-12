@@ -1,16 +1,15 @@
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
-        frameworks: ['mocha'],
+        frameworks: ['mocha', 'chai'],
         files: [
             'lib/*.js',
-            'node_modules/expect.js/index.js',
             'test/*.js'
         ],
         preprocessors: {
             'lib/*.js': ['babel'],
             'test/*.js': ['babel']
         },
-        reporters: ['progress'],
+        reporters: ['mocha'],
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG

@@ -6,6 +6,7 @@
   "scripts": {
     "build": "babel lib/cookiePolice.js --out-file index.js --source-maps --modules common",
     "test": "karma start --single-run",
+    "watch": "karma start",
     "pretest": "npm run lint",
     "lint": "eslint lib test",
     "push-package-publish": "git push --follow-tags && npm run build && npm publish",
@@ -21,12 +22,14 @@
   "license": "MIT",
   "devDependencies": {
     "babel": "^5.8.23",
+    "chai": "^3.3.0",
     "eslint-config-finn": "0.0.2",
-    "expect.js": "^0.3.1",
     "karma": "^0.13.10",
     "karma-babel-preprocessor": "^5.2.2",
+    "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.1",
     "karma-mocha": "^0.2.0",
+    "karma-mocha-reporter": "^1.1.1",
     "karma-phantomjs-launcher": "^0.2.1",
     "mocha": "^2.3.3",
     "phantomjs": "^1.9.18"

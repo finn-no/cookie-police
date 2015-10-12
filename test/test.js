@@ -32,7 +32,7 @@ if (BROWSER_SUPPORT) {
             cookiePoliceWrap({whiteList: ['x', 'foo', 'loo']});
             expect(() => {
                 document.cookie = 'bar=1';
-            }).to.throwException();
+            }).to.throw();
 
             expect(getCookieNames()).to.not.contain('bar');
         });
@@ -42,7 +42,7 @@ if (BROWSER_SUPPORT) {
             expect(getCookieNames()).not.to.contain('foo');
             expect(() => {
                 document.cookie = 'foo=bar';
-            }).to.not.throwException();
+            }).to.not.throw();
             expect(getCookieNames()).to.contain('foo');
         });
 
@@ -50,7 +50,7 @@ if (BROWSER_SUPPORT) {
             cookiePoliceWrap({ignoreList: ['x', 'foo', 'loo']});
             expect(() => {
                 document.cookie = 'loo=1';
-            }).to.not.throwException();
+            }).to.not.throw();
 
             expect(getCookieNames()).to.not.contain('loo');
         });
