@@ -54,6 +54,24 @@ if (BROWSER_SUPPORT) {
 
             expect(getCookieNames()).to.not.contain('loo');
         });
+
+        it('should allow customizing how breaches are handled', () => {
+            var onErrorCalled = false;
+            cookiePoliceWrap({whiteList: ['foo'], onViolation: function (errMsg, cookieName) {
+                onErrorCalled = true;
+                expect(cookieName).to.equal('bar');
+
+                expect(errMsg).to.be.a('string');
+                expect(errMsg).to.contain('"bar" is not in the whitelist. Blocked.');
+            }});
+
+            expect(() => {
+                document.cookie = 'bar=1';
+            }).to.not.throw();
+
+            expect(onErrorCalled).to.equal(true);
+            expect(getCookieNames()).to.not.contain('bar');
+        });
     });
 } else {
     console.log('This browser does not have necessary features for Code police. Skipping tests.');

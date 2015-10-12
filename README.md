@@ -16,7 +16,7 @@ Ironically, in the most privacy-concerned browser Safari, it is not possible to 
 Available options:
 + `whiteList`: Array of allowed cookie-names. A breach will happen if anyone tries to set a cookie not in the list.
 + `ignoreList`: Array of cookie-names to ignore. It will silently ignore them without throwing an Error.
-
++ `onViolation`: Function to handle a violation. Arguments: `errorMessage`, `cookieName`. Default handler throws an error.
 
 ## Examples
 
