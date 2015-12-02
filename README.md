@@ -1,5 +1,7 @@
 # Cookie Police :cop:
 
+**NB! This is still a proof of concept. It has not been used in production yet.**
+
 Protects `document.cookie` for you!
 
 It's almost impossible to have control over what cookies third parties store on your domain. Since Safari started blocking third party cookies, most third parties have moved to store *their* third party cookies on your domain. So the number of cookies and the total size of cookies have started to become a problem. Because cookies are sent on every request to your server, it can slow down the user experience. You might also get problems if your infrastructure can't handle more than X cookies or the requests get so big that your server automatically responds with *400 Bad Request*!
