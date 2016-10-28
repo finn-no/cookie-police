@@ -1,9 +1,11 @@
-import cookiePolice, { BROWSER_SUPPORT } from '../lib/cookiePolice.js';
+import cookiePolice, { SUPPORT_WRAP_GET_SET } from '../lib/cookiePolice.js';
 
-if (BROWSER_SUPPORT) {
+if (SUPPORT_WRAP_GET_SET) {
     describe('Cookie police', () => {
         let resetFn;
         let cookiePoliceWrap;
+        const loc = document.location;
+        const EXTRA_COOKIE_SETTINGS = `path=${ loc.pathname };domain=${ loc.hostname };max-age=3600`;
 
         before(() => {
             cookiePoliceWrap = function (...args) {
@@ -28,31 +30,35 @@ if (BROWSER_SUPPORT) {
             expect(cookiePolice).to.be.a('function');
         });
 
-        it('should not allow setting a non-whitelisted cookie', () => {
-            cookiePoliceWrap({whiteList: ['x', 'foo', 'loo']});
-            expect(() => {
-                document.cookie = 'bar=1';
-            }).to.throw();
+        describe('whitelist', () => {
+            it('should not allow setting a non-whitelisted cookie', () => {
+                cookiePoliceWrap({whiteList: ['x', 'foo', 'loo']});
+                expect(() => {
+                    document.cookie = `bar=1;${ EXTRA_COOKIE_SETTINGS }`;
+                }).to.throw();
 
-            expect(getCookieNames()).to.not.contain('bar');
+                expect(getCookieNames()).to.not.contain('bar');
+            });
+
+            it('should allow setting a whitelisted cookie', () => {
+                cookiePoliceWrap({whiteList: ['x', 'foo', 'loo']});
+                expect(getCookieNames()).not.to.contain('foo');
+                expect(() => {
+                    document.cookie = 'foo=bar';
+                }).to.not.throw();
+                expect(getCookieNames()).to.contain('foo');
+            });
         });
 
-        it('should allow setting a whitelisted cookie', () => {
-            cookiePoliceWrap({whiteList: ['x', 'foo', 'loo']});
-            expect(getCookieNames()).not.to.contain('foo');
-            expect(() => {
-                document.cookie = 'foo=bar';
-            }).to.not.throw();
-            expect(getCookieNames()).to.contain('foo');
-        });
+        describe('blackList', () => {
+            it('should ignore a cookie in the blackList', () => {
+                cookiePoliceWrap({blackList: ['x', 'foo', 'loo']});
+                expect(() => {
+                    document.cookie = 'loo=1';
+                }).to.not.throw();
 
-        it('should ignore a cookie in the ignoreList', () => {
-            cookiePoliceWrap({ignoreList: ['x', 'foo', 'loo']});
-            expect(() => {
-                document.cookie = 'loo=1';
-            }).to.not.throw();
-
-            expect(getCookieNames()).to.not.contain('loo');
+                expect(getCookieNames()).to.not.contain('loo');
+            });
         });
 
         it('should allow customizing how breaches are handled', () => {
@@ -77,7 +83,6 @@ if (BROWSER_SUPPORT) {
     console.log('This browser does not have necessary features for Code police. Skipping tests.');
     describe('thou', function () {
         it('should pass', function () {
-            expect(true).to.be(true);
         });
     });
 }
